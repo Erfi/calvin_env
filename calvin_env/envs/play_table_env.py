@@ -22,6 +22,7 @@ from calvin_env.utils.utils import FpsController, get_git_commit_hash
 
 # A logger for this file
 log = logging.getLogger(__name__)
+log.setLevel(logging.ERROR)
 
 
 class PlayTableSimEnv(gym.Env):
@@ -137,7 +138,7 @@ class PlayTableSimEnv(gym.Env):
 
     def close(self):
         if self.ownsPhysicsClient:
-            print("disconnecting id %d from server" % self.cid)
+            log.info("disconnecting id %d from server" % self.cid)
             if self.cid >= 0 and self.p is not None:
                 try:
                     self.p.disconnect(physicsClientId=self.cid)
@@ -145,7 +146,7 @@ class PlayTableSimEnv(gym.Env):
                     pass
 
         else:
-            print("does not own physics client id")
+            log.info("does not own physics client id")
 
     def render(self, mode="human"):
         """render is gym compatibility function"""
@@ -277,6 +278,8 @@ def get_env(dataset_path, obs_space=None, show_gui=True, **kwargs):
         }
         for k in exclude_keys:
             del render_conf.cameras[k]
+    # tactile breaks things. remove it
+    render_conf.cameras.pop("tactile", None)
     if "scene" in kwargs:
         scene_cfg = OmegaConf.load(Path(calvin_env.__file__).parents[1] / "conf/scene" / f"{kwargs['scene']}.yaml")
         OmegaConf.merge(render_conf, scene_cfg)
