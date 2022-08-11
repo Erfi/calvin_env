@@ -142,7 +142,7 @@ class PlayTableSimEnv(gym.Env):
             if self.cid >= 0 and self.p is not None:
                 try:
                     self.p.disconnect(physicsClientId=self.cid)
-                except TypeError:
+                except p.error:
                     pass
 
         else:
@@ -289,7 +289,7 @@ def get_env(dataset_path, obs_space=None, show_gui=True, **kwargs):
     return env
 
 
-@hydra.main(config_path="../../conf", config_name="config_data_collection")
+@hydra.main(version_base=None, config_path="../../conf", config_name="config_data_collection")
 def run_env(cfg):
     env = hydra.utils.instantiate(cfg.env, show_gui=True, use_vr=False, use_scene_info=True)
 
