@@ -1,0 +1,20 @@
+load_dir: ???
+data_path: data
+save_dir: /tmp
+show_gui: false
+processes: 8
+set_static_cam: false
+
+env:
+  cameras: ${cameras}
+  show_gui: ${show_gui}
+  use_vr: false
+
+hydra:
+  run:
+    dir: ${save_dir}/${now:%Y-%m-%d}_rendered/
+
+defaults:
+  - cameras: static_and_gripper
+  - override hydra/job_logging: colorlog
+  - override hydra/hydra_logging: colorlog

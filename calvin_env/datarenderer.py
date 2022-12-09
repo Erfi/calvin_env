@@ -18,7 +18,7 @@ from calvin_env.utils.utils import count_frames, get_episode_lengths, set_egl_de
 log = logging.getLogger(__name__)
 
 
-@hydra.main(config_path="../conf", config_name="config_rendering")
+@hydra.main(config_path="../conf", config_name="config_random_rendering")
 def main(cfg):
     log.info("pyBullet Data Renderer")
     log.info("Determining maximum frame")

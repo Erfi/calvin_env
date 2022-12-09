@@ -1,0 +1,21 @@
+seed: 0
+use_vr: False
+data_path: data
+save_dir: /tmp
+record: true
+num_rollouts: 1000
+rollout_length: 1000
+
+hydra:
+  run:
+    dir: ${save_dir}/${now:%Y-%m-%d}
+    
+defaults:
+  - cameras: static_and_gripper
+  - env: play_table_env
+  - scene: calvin_scene_D
+  - robot: panda_longer_finger
+  - tasks: new_playtable_tasks
+  - recorder: recorder
+  - override hydra/job_logging: colorlog
+  - override hydra/hydra_logging: colorlog
